@@ -1,0 +1,63 @@
+<svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient cho thân quả -->
+  <defs>
+    <radialGradient id="fruitGradient" cx="50%" cy="30%">
+      <stop offset="0%" stop-color="#FFB3D1"/>
+      <stop offset="70%" stop-color="#FF90BB"/>
+      <stop offset="100%" stop-color="#E06FA3"/>
+    </radialGradient>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4CAF50"/>
+      <stop offset="100%" stop-color="#2E7D32"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Thân chính - hình quả đào/cherry lớn -->
+  <ellipse cx="100" cy="100" rx="55" ry="50" fill="url(#fruitGradient)"/>
+  
+  <!-- Lá trên đỉnh -->
+  <ellipse cx="85" cy="55" rx="12" ry="20" fill="url(#leafGradient)" transform="rotate(-30 85 55)"/>
+  <ellipse cx="115" cy="55" rx="12" ry="20" fill="url(#leafGradient)" transform="rotate(30 115 55)"/>
+  
+  <!-- Cành nhỏ -->
+  <rect x="98" y="45" width="4" height="15" rx="2" fill="#8BC34A"/>
+  
+  <!-- Mặt đồng hồ bên trong -->
+  <circle cx="100" cy="100" r="35" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Các vạch giờ đơn giản -->
+  <circle cx="100" cy="75" r="2" fill="#FF90BB"/>  <!-- 12 giờ -->
+  <circle cx="120" cy="100" r="2" fill="#FF90BB"/> <!-- 3 giờ -->
+  <circle cx="100" cy="125" r="2" fill="#FF90BB"/> <!-- 6 giờ -->
+  <circle cx="80" cy="100" r="2" fill="#FF90BB"/>  <!-- 9 giờ -->
+  
+  <!-- Kim đồng hồ -->
+  <line x1="100" y1="100" x2="115" y2="100" stroke="#FF90BB" stroke-width="3" stroke-linecap="round"/> <!-- Kim giờ -->
+  <line x1="100" y1="100" x2="100" y2="85" stroke="#FF90BB" stroke-width="2" stroke-linecap="round"/> <!-- Kim phút -->
+  
+  <!-- Tâm đồng hồ -->
+  <circle cx="100" cy="100" r="3" fill="#FF90BB"/>
+  
+  <!-- Mặt cute -->
+  <!-- Mắt -->
+  <circle cx="88" cy="95" r="4" fill="#2D2D2D"/>
+  <circle cx="112" cy="95" r="4" fill="#2D2D2D"/>
+  <circle cx="89" cy="93" r="1.5" fill="#FFFFFF"/> <!-- Highlight mắt trái -->
+  <circle cx="113" cy="93" r="1.5" fill="#FFFFFF"/> <!-- Highlight mắt phải -->
+  
+  <!-- Má hồng -->
+  <circle cx="75" cy="105" r="6" fill="#FF90BB" opacity="0.4"/>
+  <circle cx="125" cy="105" r="6" fill="#FF90BB" opacity="0.4"/>
+  
+  <!-- Miệng cười -->
+  <path d="M90 115 Q100 125 110 115" stroke="#2D2D2D" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Các bong bóng trang trí -->
+  <circle cx="150" cy="70" r="4" fill="#FF90BB" opacity="0.6"/>
+  <circle cx="160" cy="85" r="2" fill="#FF90BB" opacity="0.4"/>
+  <circle cx="45" cy="80" r="3" fill="#FF90BB" opacity="0.5"/>
+  <circle cx="35" cy="65" r="1.5" fill="#FF90BB" opacity="0.3"/>
+  
+  <!-- Chữ FEEDIA -->
+  <text x="100" y="200" text-anchor="middle" font-family="Comic Sans MS, cursive, Arial" font-size="32" font-weight="600" fill="#FF90BB" letter-spacing="1px">FEEDIA</text>
+</svg>

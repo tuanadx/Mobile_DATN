@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">796925846425252</string>
+    <string name="fb_login_protocol_scheme">796925846425252</string>
+    <string name="facebook_client_token">8165735c08becc25a3faf3e80a882a63</string>
+    <string name="app_name">SaveFood </string>
+</resources>
