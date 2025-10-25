@@ -59,16 +59,16 @@ class _PromoSectionState extends State<PromoSection> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: widget.showHeader ? 20 : 20),
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section Header
           if (widget.showHeader) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                 const Text(
                   'Promo & Cashback',
                   style: TextStyle(
@@ -98,6 +98,7 @@ class _PromoSectionState extends State<PromoSection> {
                 ),
               ],
             ),
+            ),
             const SizedBox(height: 16),
           ],
           
@@ -106,9 +107,7 @@ class _PromoSectionState extends State<PromoSection> {
             height: widget.isVertical ? null : 160,
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: PageView.builder(
+                PageView.builder(
                   controller: _pageController,
                   onPageChanged: (index) {
                     setState(() {
@@ -232,7 +231,6 @@ class _PromoSectionState extends State<PromoSection> {
                     );
                   },
                 ),
-                ),
                 
                 // Page indicator overlay
                 if (widget.promos.length > 1)
@@ -265,7 +263,6 @@ class _PromoSectionState extends State<PromoSection> {
           // Bottom spacing
           const SizedBox(height: 8),
         ],
-      ),
     );
   }
 }

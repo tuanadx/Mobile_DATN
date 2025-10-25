@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'core/services/facebook_service.dart';
 import 'presentation/splash/pages/splash_screen.dart';
 import 'presentation/main/pages/main_page.dart';
 import 'presentation/auth/pages/login_page.dart';
@@ -19,16 +18,8 @@ import 'core/services/product_data_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Facebook SDK for web so window.FB is available
-if (kIsWeb) {
-  const fbAppId = String.fromEnvironment('FACEBOOK_APP_ID', defaultValue: '796925846425252');
-  await FacebookAuth.i.webAndDesktopInitialize(
-    appId: fbAppId,
-    cookie: true,
-    xfbml: true,
-    version: "v18.0",
-  );
-}
+  // Initialize Facebook SDK
+  await FacebookService.initialize();
   
   // Load thông tin đăng nhập từ local storage
   await AuthService.loadAuthData();
