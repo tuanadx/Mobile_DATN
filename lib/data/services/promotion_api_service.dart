@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import 'package:feedia/data/model/promo_model.dart';
-import 'package:feedia/core/configs/api_config.dart';
+import 'package:savefood/data/model/promo_model.dart';
+import 'package:savefood/core/configs/api_config.dart';
 
 class PromotionApiService {
   final Dio _dio;

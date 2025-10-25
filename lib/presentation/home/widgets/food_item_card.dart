@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/model/food_model.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/model/food_model.dart';
 
 class FoodItemCard extends StatelessWidget {
   final FoodModel food;
@@ -77,13 +77,13 @@ class FoodItemCard extends StatelessWidget {
                         const Icon(
                           Icons.star,
                           color: Colors.amber,
-                          size: 12,
+                          size: 10,
                         ),
                         const SizedBox(width: 2),
                         Text(
                           food.rating.toString(),
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 8,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -109,7 +109,7 @@ class FoodItemCard extends StatelessWidget {
                         child: Text(
                           food.name,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -119,7 +119,7 @@ class FoodItemCard extends StatelessWidget {
                       ),
                       if (food.discountPercentage != null)
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
                           decoration: BoxDecoration(
                             color: AppColor.primary,
                             borderRadius: BorderRadius.circular(8),
@@ -127,7 +127,7 @@ class FoodItemCard extends StatelessWidget {
                           child: Text(
                             '${food.discountPercentage!.toInt()}%',
                             style: const TextStyle(
-                              fontSize: 10,
+                              fontSize: 9,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
@@ -142,7 +142,7 @@ class FoodItemCard extends StatelessWidget {
                   Text(
                     food.description,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 9,
                       color: Colors.grey,
                     ),
                     maxLines: 2,
@@ -157,13 +157,13 @@ class FoodItemCard extends StatelessWidget {
                       const Icon(
                         Icons.location_on,
                         color: Colors.grey,
-                        size: 14,
+                        size: 10,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         food.distance,
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 8,
                           color: Colors.grey,
                         ),
                       ),
@@ -171,13 +171,13 @@ class FoodItemCard extends StatelessWidget {
                       const Icon(
                         Icons.access_time,
                         color: Colors.grey,
-                        size: 14,
+                        size: 10,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         food.deliveryTime,
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 8,
                           color: Colors.grey,
                         ),
                       ),
@@ -192,7 +192,7 @@ class FoodItemCard extends StatelessWidget {
                     runSpacing: 4,
                     children: food.tags.map((tag) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                         decoration: BoxDecoration(
                           color: AppColor.primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
@@ -200,7 +200,7 @@ class FoodItemCard extends StatelessWidget {
                         child: Text(
                           tag,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 8,
                             color: AppColor.primary,
                             fontWeight: FontWeight.w500,
                           ),

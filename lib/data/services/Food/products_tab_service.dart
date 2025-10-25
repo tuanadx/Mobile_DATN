@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import '../../core/configs/api_config.dart';
-import '../model/food_model.dart';
+import '../../../core/configs/api_config.dart';
+import '../../model/food_model.dart';
 
-class FeaturedService {
+class ProductsTabService {
   final Dio _dio;
 
-  FeaturedService({Dio? dio}) : _dio = dio ?? _createDio();
+  ProductsTabService({Dio? dio}) : _dio = dio ?? _createDio();
 
   static Dio _createDio() {
     final dio = Dio();
@@ -24,34 +24,38 @@ class FeaturedService {
     return dio;
   }
 
-  /// Lấy danh sách sản phẩm nổi bật
-  Future<List<FoodModel>> getFeaturedProducts({
+  /// Lấy sản phẩm gần tôi (theo khoảng cách)
+  Future<List<FoodModel>> getNearbyProducts({
     int page = 1,
-    int pageSize = 4,
+    int pageSize = 10,
+    double? latitude,
+    double? longitude,
   }) async {
     try {
       final response = await _dio.get(
-        '/featured/products',
+        '/products/nearby',
         queryParameters: {
           'page': page,
           'pageSize': pageSize,
+          if (latitude != null) 'latitude': latitude,
+          if (longitude != null) 'longitude': longitude,
         },
       );
       final list = _ensureList(response.data);
       return list.map((json) => FoodModel.fromJson(json)).toList();
     } catch (e) {
-      throw Exception('Failed to fetch featured products: $e');
+      throw Exception('Failed to fetch nearby products: $e');
     }
   }
 
-  /// Lấy tất cả sản phẩm nổi bật (cho trang xem tất cả)
-  Future<List<FoodModel>> getAllFeaturedProducts({
+  /// Lấy sản phẩm bán chạy (theo số lượng đơn hàng)
+  Future<List<FoodModel>> getPopularProducts({
     int page = 1,
-    int pageSize = 20,
+    int pageSize = 10,
   }) async {
     try {
       final response = await _dio.get(
-        '/featured/products/all',
+        '/products/popular',
         queryParameters: {
           'page': page,
           'pageSize': pageSize,
@@ -60,7 +64,27 @@ class FeaturedService {
       final list = _ensureList(response.data);
       return list.map((json) => FoodModel.fromJson(json)).toList();
     } catch (e) {
-      throw Exception('Failed to fetch all featured products: $e');
+      throw Exception('Failed to fetch popular products: $e');
+    }
+  }
+
+  /// Lấy sản phẩm đánh giá cao (theo rating)
+  Future<List<FoodModel>> getTopRatedProducts({
+    int page = 1,
+    int pageSize = 10,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/products/top-rated',
+        queryParameters: {
+          'page': page,
+          'pageSize': pageSize,
+        },
+      );
+      final list = _ensureList(response.data);
+      return list.map((json) => FoodModel.fromJson(json)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch top rated products: $e');
     }
   }
 

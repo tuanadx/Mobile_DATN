@@ -9,6 +9,7 @@ class StoreModel {
   final int reviewCount;
   final String deliveryTime;
   final String deliveryAddress;
+  final String distance;
   final List<String> tags;
   final bool isFavorite;
   final String phoneNumber;
@@ -26,6 +27,7 @@ class StoreModel {
     required this.reviewCount,
     required this.deliveryTime,
     required this.deliveryAddress,
+    required this.distance,
     required this.tags,
     this.isFavorite = false,
     required this.phoneNumber,
@@ -45,6 +47,7 @@ class StoreModel {
       reviewCount: json['reviewCount'] as int,
       deliveryTime: json['deliveryTime'] as String,
       deliveryAddress: json['deliveryAddress'] as String,
+      distance: json['distance'] as String,
       tags: List<String>.from(json['tags'] as List),
       isFavorite: json['isFavorite'] as bool? ?? false,
       phoneNumber: json['phoneNumber'] as String,
@@ -65,6 +68,7 @@ class StoreModel {
       'reviewCount': reviewCount,
       'deliveryTime': deliveryTime,
       'deliveryAddress': deliveryAddress,
+      'distance': distance,
       'tags': tags,
       'isFavorite': isFavorite,
       'phoneNumber': phoneNumber,
@@ -85,6 +89,7 @@ class StoreModel {
       reviewCount: reviewCount,
       deliveryTime: deliveryTime,
       deliveryAddress: deliveryAddress,
+      distance: distance,
       tags: tags,
       isFavorite: isFavorite,
       phoneNumber: phoneNumber,

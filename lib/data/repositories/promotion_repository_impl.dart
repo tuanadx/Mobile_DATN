@@ -1,7 +1,7 @@
-import 'package:feedia/domain/entities/promotion_entity.dart';
-import 'package:feedia/domain/repositories/promotion_repository_interface.dart';
-import 'package:feedia/data/services/promotion_api_service.dart';
-import 'package:feedia/data/model/promo_model.dart';
+import 'package:savefood/domain/entities/promotion_entity.dart';
+import 'package:savefood/domain/repositories/promotion_repository_interface.dart';
+import 'package:savefood/data/services/promotion_api_service.dart';
+import 'package:savefood/data/model/promo_model.dart';
 
 class PromotionRepositoryImpl implements PromotionRepositoryInterface {
   final PromotionApiService _apiService;

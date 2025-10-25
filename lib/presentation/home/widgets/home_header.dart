@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
 
 class HomeHeader extends StatelessWidget {
   final String userName;
@@ -25,7 +25,7 @@ class HomeHeader extends StatelessWidget {
           colors: [AppColor.primary, Color(0xFFA4C3A2)],
         ),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 50, 20, 40),
+      padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -33,7 +33,7 @@ class HomeHeader extends StatelessWidget {
           Text(
             'Hi $userName!',
             style: const TextStyle(
-              fontSize: 28,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
@@ -44,7 +44,7 @@ class HomeHeader extends StatelessWidget {
           const Text(
             'Giao đến:',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: Colors.white,
               fontWeight: FontWeight.w500,
             ),
@@ -59,14 +59,14 @@ class HomeHeader extends StatelessWidget {
                 const Icon(
                   Icons.location_on,
                   color: Colors.white,
-                  size: 16,
+                  size: 18,
                 ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
                     userLocation,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: Colors.white,
                     ),
                     overflow: TextOverflow.ellipsis,
@@ -84,6 +84,7 @@ class HomeHeader extends StatelessWidget {
           
           // Search Bar
           Container(
+            height: 40,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -98,20 +99,21 @@ class HomeHeader extends StatelessWidget {
             child: TextField(
               onChanged: onSearchChanged,
               decoration: const InputDecoration(
-                hintText: 'Search menus or restaurants',
+                hintText: 'Tìm kiếm món ăn hoặc quán ăn',
                 hintStyle: TextStyle(
                   color: Colors.grey,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
                 prefixIcon: Icon(
                   Icons.search,
                   color: Colors.grey,
-                  size: 20,
+                  size: 16,
                 ),
                 border: InputBorder.none,
+                isDense: true,
                 contentPadding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
+                  horizontal: 12,
+                  vertical: 15,
                 ),
               ),
             ),

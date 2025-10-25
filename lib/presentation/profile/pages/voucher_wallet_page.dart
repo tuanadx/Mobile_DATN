@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
 
 class VoucherWalletPage extends StatefulWidget {
   const VoucherWalletPage({super.key});
@@ -36,14 +36,14 @@ class _VoucherWalletPageState extends State<VoucherWalletPage>
         ),
         title: const Text(
           'Ví Voucher',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12),
         ),
         actions: [
           TextButton(
             onPressed: () {},
             child: const Text(
               'Lịch sử',
-              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 10),
             ),
           ),
         ],
@@ -56,6 +56,8 @@ class _VoucherWalletPageState extends State<VoucherWalletPage>
               labelColor: AppColor.primary,
               unselectedLabelColor: Colors.black54,
               indicatorColor: AppColor.primary,
+              labelStyle: const TextStyle(fontSize: 12),
+              unselectedLabelStyle: const TextStyle(fontSize: 12),
               tabs: const [
                 Tab(text: 'Tất cả'),
                 Tab(text: 'Giảm giá món'),
@@ -95,7 +97,7 @@ class _EmptyVoucherView extends StatelessWidget {
             Text(
               'Ui, chưa có voucher trong ví',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: Colors.black54,
               ),
@@ -104,7 +106,7 @@ class _EmptyVoucherView extends StatelessWidget {
             SizedBox(height: 8),
             Text(
               'Dạo một vòng các bộ sưu tập và cửa hàng để thu thập thêm voucher nhé!',
-              style: TextStyle(fontSize: 14, color: Colors.black45),
+              style: TextStyle(fontSize: 12, color: Colors.black45),
               textAlign: TextAlign.center,
             ),
           ],

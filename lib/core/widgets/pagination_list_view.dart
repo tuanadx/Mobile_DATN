@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/services/pagination_service.dart';
+import 'package:savefood/core/services/pagination_service.dart';
 
 class PaginationListView<T> extends StatefulWidget {
   final PaginationService<T> paginationService;
@@ -73,7 +73,9 @@ class _PaginationListViewState<T> extends State<PaginationListView<T>> {
   }
 
   Future<void> _onRefresh() async {
+    print('🔄 Refreshing data...');
     await widget.paginationService.refresh();
+    print('✅ Refresh completed');
   }
 
   @override

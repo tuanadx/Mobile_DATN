@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/domain/entities/food_entity.dart';
-import 'package:feedia/domain/entities/store_entity.dart';
-import 'package:feedia/data/model/food_model.dart';
-import 'package:feedia/data/model/category_model_fix.dart';
-import 'package:feedia/data/services/Store/Store_service.dart';
-import 'package:feedia/presentation/foods/pages/food_detail_page.dart';
-import 'package:feedia/presentation/foods/pages/all_foods_page.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
+import 'package:savefood/domain/entities/store_entity.dart';
+import 'package:savefood/data/model/food_model.dart';
+import 'package:savefood/data/model/category_model_fix.dart';
+import 'package:savefood/data/services/Store/Store_service.dart';
+import 'package:savefood/presentation/foods/pages/food_detail_page.dart';
+import 'package:savefood/presentation/foods/pages/all_foods_page.dart';
 
 class StorePage extends StatefulWidget {
   final StoreEntity store;
@@ -28,7 +28,6 @@ class _StorePageState extends State<StorePage> {
   bool _showAppBar = false;
   late List<FoodEntity> _popularFoods;
   late List<FoodEntity> _flashSaleFoods;
-  bool _showAllCategories = false;
   List<CategoryModel> _categories = [];
   String _selectedCategoryId = '';
   final StoreService _storeService = StoreService();
@@ -168,6 +167,152 @@ class _StorePageState extends State<StorePage> {
     );
   }
 
+  // Helper method to get product count for each category
+  int _getProductCountForCategory(String categoryId) {
+    if (categoryId == 'all') {
+      return _popularFoods.length;
+    }
+    
+    final category = _categories.firstWhere(
+      (cat) => cat.id == categoryId,
+      orElse: () => const CategoryModel(id: '', name: '', iconPath: ''),
+    );
+    
+    if (category.id.isEmpty) return 0;
+    
+    return _popularFoods.where((food) => food.category == category.name).length;
+  }
+
+  // Show categories modal overlay
+  void _showCategoriesModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: Column(
+          children: [
+            // Handle bar
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            
+            // Header
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  const Text(
+                    'TẤT CẢ',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Icon(
+                      Icons.keyboard_arrow_up,
+                      color: Colors.grey[600],
+                      size: 24,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Categories List
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: _categories.length,
+                itemBuilder: (context, index) {
+                  final category = _categories[index];
+                  final productCount = _getProductCountForCategory(category.id);
+                  final isSelected = category.id == _selectedCategoryId;
+                  
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColor.primary.withOpacity(0.1) : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: isSelected ? AppColor.primary : Colors.grey[200]!,
+                        width: isSelected ? 2 : 1,
+                      ),
+                    ),
+                    child: ListTile(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategoryId = category.id;
+                        });
+                        Navigator.pop(context);
+                      },
+                      title: Text(
+                        category.name,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                          color: isSelected ? AppColor.primary : Colors.black,
+                        ),
+                      ),
+                      trailing: productCount > 0
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: isSelected 
+                                    ? AppColor.primary.withOpacity(0.2)
+                                    : Colors.grey[200],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Text(
+                                '($productCount)',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: isSelected ? AppColor.primary : Colors.grey[600],
+                                ),
+                              ),
+                            )
+                          : null,
+                      leading: isSelected
+                          ? Icon(
+                              Icons.check_circle,
+                              color: AppColor.primary,
+                              size: 20,
+                            )
+                          : Icon(
+                              Icons.radio_button_unchecked,
+                              color: Colors.grey[400],
+                              size: 20,
+                            ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,59 +327,83 @@ class _StorePageState extends State<StorePage> {
             pinned: true,
             backgroundColor: Colors.white,
             elevation: 0,
-            leading: Container(
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.pop(context),
+            leading: Padding(
+              padding: const EdgeInsets.all(8),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white, size: 18),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
             ),
             actions: [
               Container(
-                margin: const EdgeInsets.all(8),
+                margin: const EdgeInsets.all(4),
+                constraints: const BoxConstraints(
+                  minWidth: 32,
+                  maxWidth: 32,
+                  minHeight: 32,
+                  maxHeight: 32,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.2),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
                   ],
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.search, color: Colors.black),
+                  icon: const Icon(Icons.search, color: Colors.white, size: 20),
                   onPressed: () {},
+                  padding: EdgeInsets.zero,
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(8),
+                margin: const EdgeInsets.all(4),
+                constraints: const BoxConstraints(
+                  minWidth: 32,
+                  maxWidth: 32,
+                  minHeight: 32,
+                  maxHeight: 32,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.black.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.2),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
                   ],
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.share, color: Colors.black),
-                  onPressed: () {},
+                  icon: Icon(
+                    _isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: _isFavorite ? Colors.red : Colors.white,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isFavorite = !_isFavorite;
+                    });
+                  },
+                  padding: EdgeInsets.zero,
                 ),
               ),
             ],
@@ -263,7 +432,7 @@ class _StorePageState extends State<StorePage> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
@@ -284,7 +453,7 @@ class _StorePageState extends State<StorePage> {
                       Text(
                         '${widget.store.rating} (${widget.store.reviewCount}+ Bình luận)',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.grey,
                         ),
                       ),
@@ -316,34 +485,32 @@ class _StorePageState extends State<StorePage> {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Text(
-                'Danh mục',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Text(
+                'TẤT CẢ',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
-              const Spacer(),
+            ),
+            const Spacer(),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _showAllCategories = !_showAllCategories;
-                  });
+                  _showCategoriesModal(context);
                 },
                 child: Icon(
-                  _showAllCategories ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  Icons.keyboard_arrow_down,
                   color: Colors.grey[600],
                   size: 24,
-                ),
               ),
-            ],
-          ),
-          const SizedBox(height: 12),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
           
           // Horizontal scrollable categories
           SizedBox(
@@ -365,7 +532,7 @@ class _StorePageState extends State<StorePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     decoration: BoxDecoration(
                       color: isSelected ? AppColor.primary : Colors.grey[100],
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         color: isSelected ? AppColor.primary : Colors.grey[300]!,
                       ),
@@ -375,7 +542,7 @@ class _StorePageState extends State<StorePage> {
                         category.name,
                         style: TextStyle(
                           color: isSelected ? Colors.white : Colors.black,
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -386,40 +553,6 @@ class _StorePageState extends State<StorePage> {
             ),
           ),
           
-          // Dropdown categories (hiển thị khi _showAllCategories = true)
-          if (_showAllCategories) ...[
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey[200]!),
-              ),
-              child: Column(
-                children: _categories.map((category) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedCategoryId = category.id;
-                      _showAllCategories = false;
-                    });
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 12),
-                    child: Text(
-                      category.name,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: category.id == _selectedCategoryId ? AppColor.primary : Colors.black,
-                        fontWeight: category.id == _selectedCategoryId ? FontWeight.w600 : FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                )).toList(),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -435,14 +568,14 @@ class _StorePageState extends State<StorePage> {
           const Text(
             'Món phổ biến',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 200,
+            height: 240,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: _popularFoods.take(5).length,
@@ -504,7 +637,7 @@ class _StorePageState extends State<StorePage> {
                 Text(
                   food.name,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -522,7 +655,7 @@ class _StorePageState extends State<StorePage> {
                 Text(
                   '${food.rating}⭐ | ${food.deliveryTime} | Còn ${(10 + food.id.hashCode % 5)} phần',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 12,
                     color: Colors.grey[500],
                   ),
                 ),
@@ -532,7 +665,7 @@ class _StorePageState extends State<StorePage> {
                     Text(
                       '${discountedPrice.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}₫',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: AppColor.primary,
                       ),
@@ -542,7 +675,7 @@ class _StorePageState extends State<StorePage> {
                       Text(
                         '${food.price.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}₫',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           color: Colors.grey[500],
                           decoration: TextDecoration.lineThrough,
                         ),
@@ -575,7 +708,7 @@ class _StorePageState extends State<StorePage> {
                     'GIẢM ${food.discountPercentage?.toInt() ?? 0}%',
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 10,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -608,12 +741,12 @@ class _StorePageState extends State<StorePage> {
                 child: Image.network(
                   image,
                   width: 160,
-                  height: 100,
+                  height: 140,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       width: 160,
-                      height: 100,
+                      height: 140,
                       color: Colors.grey[200],
                       child: const Icon(Icons.fastfood, color: Colors.grey),
                     );
@@ -645,7 +778,7 @@ class _StorePageState extends State<StorePage> {
           Text(
             name,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
             ),
             maxLines: 2,
@@ -657,7 +790,7 @@ class _StorePageState extends State<StorePage> {
               Text(
                 '${discountedPrice.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}₫',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: AppColor.primary,
                 ),
@@ -723,7 +856,7 @@ class _StorePageState extends State<StorePage> {
               Text(
                 category.name,
                 style: const TextStyle(
-                  fontSize: 18,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -747,124 +880,124 @@ class _StorePageState extends State<StorePage> {
           ),
           const SizedBox(height: 16),
           ...categoryFoods.map((food) => Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    food.imageUrl,
-                    width: 80,
-                    height: 80,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      width: 80,
-                      height: 80,
-                      color: Colors.grey[200],
-                      child: const Icon(Icons.fastfood, color: Colors.grey),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        food.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          ...List.generate(5, (i) => Icon(
-                            i < food.rating ? Icons.star : Icons.star_border,
-                            color: Colors.amber,
-                            size: 16,
-                          )),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${food.rating}',
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            '${food.price.toStringAsFixed(0)}đ',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange,
-                            ),
-                          ),
-                          if (food.discountPercentage != null) ...[
-                            const SizedBox(width: 8),
-                            Text(
-                              '${(food.price * (1 + food.discountPercentage! / 100)).toStringAsFixed(0)}đ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                          ],
-                        ],
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 12),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FoodDetailPage(
-                          food: _convertToFoodModel(food),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Image.network(
+                          food.imageUrl,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            width: 80,
+                            height: 80,
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.fastfood, color: Colors.grey),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppColor.primary, Color(0xFFA4C3A2)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              food.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                ...List.generate(5, (i) => Icon(
+                                  i < food.rating ? Icons.star : Icons.star_border,
+                                  color: Colors.amber,
+                                  size: 16,
+                                )),
+                                const SizedBox(width: 4),
+                                Text(
+                                  '${food.rating}',
+                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Text(
+                                  '${food.price.toStringAsFixed(0)}đ',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.orange,
+                                  ),
+                                ),
+                                if (food.discountPercentage != null) ...[
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    '${(food.price * (1 + food.discountPercentage! / 100)).toStringAsFixed(0)}đ',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[600],
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 20,
-                    ),
+                      const SizedBox(width: 12),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FoodDetailPage(
+                          food: _convertToFoodModel(food),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [AppColor.primary, Color(0xFFA4C3A2)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           )).toList(),
         ],
       ),

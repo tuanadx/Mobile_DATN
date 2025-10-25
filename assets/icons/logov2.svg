@@ -58,6 +58,6 @@
   <circle cx="45" cy="80" r="3" fill="#FF90BB" opacity="0.5"/>
   <circle cx="35" cy="65" r="1.5" fill="#FF90BB" opacity="0.3"/>
   
-  <!-- Chữ FEEDIA -->
-  <text x="100" y="200" text-anchor="middle" font-family="Comic Sans MS, cursive, Arial" font-size="32" font-weight="600" fill="#FF90BB" letter-spacing="1px">FEEDIA</text>
+  <!-- Chữ SAVEFOOD -->
+  <text x="100" y="200" text-anchor="middle" font-family="Comic Sans MS, cursive, Arial" font-size="32" font-weight="600" fill="#FF90BB" letter-spacing="1px">SAVEFOOD</text>
 </svg>

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
 
 
 class AppBasicButton extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/services/Auth/otp_service.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
-import 'package:feedia/data/services/profile_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/services/Auth/otp_service.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
+import 'package:savefood/data/services/profile_service.dart';
 
 class OtpVerificationPage extends StatefulWidget {
   final String phoneNumber;
@@ -209,196 +209,206 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
           'Xác thực OTP',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18,
+            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              
-              // Logo
-              SvgPicture.asset(
-                'assets/icons/logov2.svg',
-                width: 100,
-                height: 100,
-                fit: BoxFit.contain,
-              ),
-              
-              const SizedBox(height: 40),
-              
-              // Title
-              const Text(
-                'Nhập mã OTP',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              
-              const SizedBox(height: 8),
-              
-              // Description
-              Text(
-                'Chúng tôi đã gửi mã xác thực đến số\n${widget.phoneNumber}',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
-              
-              const SizedBox(height: 40),
-              
-              // OTP Input Fields
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (index) {
-                  return SizedBox(
-                    width: 45,
-                    height: 55,
-                    child: TextField(
-                      controller: _otpControllers[index],
-                      focusNode: _focusNodes[index],
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(1),
-                      ],
-                      onChanged: (value) => _onOtpChanged(index, value),
-                      style: const TextStyle(
-                        fontSize: 20,
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top - 
+                         MediaQuery.of(context).padding.bottom -
+                         kToolbarHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    
+                    // Logo
+                    SvgPicture.asset(
+                      'assets/icons/logov2.svg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                    
+                    // Title
+                    const Text(
+                      'Nhập mã OTP',
+                      style: TextStyle(
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey[300]!),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColor.primary, width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.grey[300]!),
-                        ),
+                        color: Colors.black,
                       ),
                     ),
-                  );
-                }),
-              ),
-              
-              const SizedBox(height: 40),
-              
-              // Verify Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _verifyOtp,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _isLoading ? Colors.grey[300] : AppColor.primary,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: _isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
-                        )
-                      : const Text(
-                          'Xác nhận',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                ),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Resend OTP
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Không nhận được mã? ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  if (_countdown > 0)
+                    
+                    const SizedBox(height: 8),
+                    
+                    // Description
                     Text(
-                      'Gửi lại sau ${_countdown}s',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
+                      'Mã xác thực đã được gửi đến số\n${widget.phoneNumber}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
                       ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: _isResending ? null : _resendOtp,
-                      child: _isResending
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Text(
-                              'Gửi lại',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: AppColor.primary,
-                                fontWeight: FontWeight.w600,
+                    ),
+                    
+                    const SizedBox(height: 40),
+                    
+                    // OTP Input Fields
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(6, (index) {
+                        return SizedBox(
+                          width: 35,
+                          height: 45,
+                          child: TextField(
+                            controller: _otpControllers[index],
+                            focusNode: _focusNodes[index],
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(1),
+                            ],
+                            onChanged: (value) => _onOtpChanged(index, value),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: const InputDecoration(
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: AppColor.primary, width: 2),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
                               ),
                             ),
+                          ),
+                        );
+                      }),
                     ),
-                ],
-              ),
-              
-              const Spacer(),
-              
-              // Terms and Conditions
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: const TextSpan(
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
+                    
+                    const SizedBox(height: 40),
+                    
+                    // Verify Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _verifyOtp,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _isLoading ? Colors.grey[300] : AppColor.primary,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                ),
+                              )
+                            : const Text(
+                                'Xác nhận',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
                     ),
-                    children: [
-                      TextSpan(text: 'Bằng cách xác thực OTP, bạn đồng ý với '),
-                      TextSpan(
-                        text: 'Chính sách quy định của Foody.',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
+                    
+                    const SizedBox(height: 10),
+                    
+                    // Resend OTP
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Không nhận được mã? ',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        if (_countdown > 0)
+                          Text(
+                            'Gửi lại sau ${_countdown}s',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          )
+                        else
+                          TextButton(
+                            onPressed: _isResending ? null : _resendOtp,
+                            child: _isResending
+                                ? const SizedBox(
+                                    width: 12,
+                                    height: 12,
+                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                  )
+                                : const Text(
+                                    'Gửi lại',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: AppColor.primary,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                          ),
+                      ],
+                    ),
+                    
+                    // Thay Spacer() bằng Expanded
+                    Expanded(
+                      child: Container(),
+                    ),
+                    
+                    // Terms and Conditions
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                          children: [
+                            TextSpan(text: 'Bằng cách xác thực OTP, bạn đồng ý với '),
+                            TextSpan(
+                              text: 'Chính sách quy định của SaveFood.',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:feedia/core/configs/goong_config.dart';
+import 'package:savefood/core/configs/goong_config.dart';
 
 class LocationService {
   static final LocationService _instance = LocationService._internal();

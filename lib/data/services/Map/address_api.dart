@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import '../../core/configs/api_config.dart';
-import '../model/address.dart';
-import 'Auth/auth_service.dart';
+import '../../../core/configs/api_config.dart';
+import '../../model/address.dart';
+import '../Auth/auth_service.dart';
 
 class AddressApi {
   static Dio _createDio() {

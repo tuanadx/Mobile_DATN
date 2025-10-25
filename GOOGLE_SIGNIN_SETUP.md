@@ -14,8 +14,8 @@
 2. Click "Create Credentials" > "OAuth 2.0 Client IDs"
 3. Chọn "Android" làm Application type
 4. Nhập thông tin:
-   - **Name**: Feedia Android App
-   - **Package name**: `com.example.feedia` (thay đổi theo package name thực tế)
+   - **Name**: SaveFood Android App
+   - **Package name**: `com.example.SaveFood` (thay đổi theo package name thực tế)
    - **SHA-1 certificate fingerprint**: (xem hướng dẫn bên dưới)
 
 ## Bước 3: Lấy SHA-1 Fingerprint

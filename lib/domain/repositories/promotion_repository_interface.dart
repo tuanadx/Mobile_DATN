@@ -1,4 +1,4 @@
-import 'package:feedia/domain/entities/promotion_entity.dart';
+import 'package:savefood/domain/entities/promotion_entity.dart';
 
 abstract class PromotionRepositoryInterface {
   Future<List<PromotionEntity>> getAllPromotions();

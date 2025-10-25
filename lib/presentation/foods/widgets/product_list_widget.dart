@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/data/model/food_model.dart';
-import 'package:feedia/core/services/product_data_manager.dart';
-import 'package:feedia/core/widgets/pagination_list_view.dart';
+import 'package:savefood/data/model/food_model.dart';
+import 'package:savefood/core/services/product_data_manager.dart';
+import 'package:savefood/core/widgets/pagination_list_view.dart';
 
 class ProductListWidget extends StatelessWidget {
   final String storeId;

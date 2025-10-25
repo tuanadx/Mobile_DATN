@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/presentation/foods/pages/food_detail_page.dart';
-import 'package:feedia/presentation/home/widgets/food_item_card.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/model/food_model.dart';
-import 'package:feedia/data/services/featured_product_service.dart';
-import 'package:feedia/core/services/pagination_service.dart';
+import 'package:savefood/presentation/foods/pages/food_detail_page.dart';
+import 'package:savefood/presentation/home/widgets/food_item_card.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/model/food_model.dart';
+import 'package:savefood/data/services/Food/featured_product_service.dart';
+import 'package:savefood/core/services/pagination_service.dart';
 
 class AllFeaturedProductsPage extends StatefulWidget {
   const AllFeaturedProductsPage({super.key});
@@ -39,7 +39,7 @@ class _AllFeaturedProductsPageState extends State<AllFeaturedProductsPage> {
   void _initializePaginationService() {
     _paginationService = PaginationService<FoodModel>(
       cacheKey: 'featured_products',
-      fetchData: (page, pageSize) => _featuredService.getAllFeaturedProducts(
+      fetchData: (page, pageSize, {bool forceRefresh = false}) => _featuredService.getAllFeaturedProducts(
         page: page,
         pageSize: pageSize,
       ),
@@ -97,7 +97,7 @@ class _AllFeaturedProductsPageState extends State<AllFeaturedProductsPage> {
         title: const Text(
           'Tất cả món nổi bật',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -121,7 +121,7 @@ class _AllFeaturedProductsPageState extends State<AllFeaturedProductsPage> {
               'Lọc',
               style: TextStyle(
                 color: AppColor.primary,
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.w600,
               ),
             ),

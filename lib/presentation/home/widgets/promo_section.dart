@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/model/promo_model.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/model/promo_model.dart';
 
 class PromoSection extends StatefulWidget {
   final List<PromoModel> promos;

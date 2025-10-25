@@ -1,6 +1,6 @@
-# feedia
+# SaveFood
 
-A new Flutter project.
+SaveFood - Food Delivery App
 
 ## Getting Started
 

@@ -1,7 +1,6 @@
-import 'package:feedia/data/model/food_model.dart';
-import 'package:feedia/data/services/Store/Store_service.dart';
-import 'package:feedia/core/services/cache_manager.dart';
-import 'package:feedia/core/services/pagination_service.dart';
+import 'package:savefood/data/model/food_model.dart';
+import 'package:savefood/data/services/Store/Store_service.dart';
+import 'package:savefood/core/services/pagination_service.dart';
 
 class ProductDataManager {
   static final ProductDataManager _instance = ProductDataManager._internal();
@@ -9,7 +8,6 @@ class ProductDataManager {
   ProductDataManager._internal();
 
   final StoreService _storeService = StoreService();
-  final CacheManager _cacheManager = CacheManager();
   
   // Pagination services cho các danh sách khác nhau
   final Map<String, PaginationService<FoodModel>> _paginationServices = {};
@@ -18,15 +16,27 @@ class ProductDataManager {
   PaginationService<FoodModel> getStoreProductsPagination(String storeId) {
     final key = 'store_products_$storeId';
     
+    print('🔍 Getting pagination service for store: $storeId');
+    
     if (!_paginationServices.containsKey(key)) {
+      print('🆕 Creating new pagination service for store: $storeId');
       _paginationServices[key] = PaginationService<FoodModel>(
         cacheKey: key,
-        fetchData: (page, pageSize) => _fetchStoreProducts(storeId, page, pageSize),
+        fetchData: (page, pageSize, {bool forceRefresh = false}) => _fetchStoreProducts(storeId, page, pageSize, forceRefresh: forceRefresh),
         cacheTTL: const Duration(minutes: 30),
       );
+    } else {
+      print('♻️ Reusing existing pagination service for store: $storeId');
     }
     
     return _paginationServices[key]!;
+  }
+
+  /// Force refresh cache cho store products
+  void clearStoreProductsCache(String storeId) {
+    print('🗑️ Clearing cache for store: $storeId');
+    // Cache sẽ được quản lý bởi dio_cache_interceptor
+    // Không cần xóa cache thủ công nữa
   }
 
   /// Lấy pagination service cho danh sách sản phẩm theo category
@@ -36,7 +46,7 @@ class ProductDataManager {
     if (!_paginationServices.containsKey(key)) {
       _paginationServices[key] = PaginationService<FoodModel>(
         cacheKey: key,
-        fetchData: (page, pageSize) => _fetchCategoryProducts(storeId, categoryId, page, pageSize),
+        fetchData: (page, pageSize, {bool forceRefresh = false}) => _fetchCategoryProducts(storeId, categoryId, page, pageSize),
         cacheTTL: const Duration(minutes: 30),
       );
     }
@@ -45,25 +55,19 @@ class ProductDataManager {
   }
 
   /// Fetch sản phẩm của store với pagination
-  Future<List<FoodModel>> _fetchStoreProducts(String storeId, int page, int pageSize) async {
+  Future<List<FoodModel>> _fetchStoreProducts(String storeId, int page, int pageSize, {bool forceRefresh = false}) async {
     try {
-      // Kiểm tra cache trước
-      final cacheKey = 'store_products_${storeId}_page_$page';
-      final cachedData = _cacheManager.getCache<List<FoodModel>>(cacheKey);
+      print('🌐 Fetching data for store $storeId, page $page, forceRefresh: $forceRefresh');
       
-      if (cachedData != null) {
-        return cachedData;
-      }
-
-      // Gọi API nếu không có cache
+      // Gọi API với forceRefresh parameter
       final products = await _storeService.getStoreProducts(
         storeId,
         page: page,
         pageSize: pageSize,
+        forceRefresh: forceRefresh,
       );
 
-      // Lưu vào cache
-      _cacheManager.setCache(cacheKey, products, ttl: const Duration(minutes: 30));
+      print('✅ Fetched ${products.length} products for store $storeId, page $page');
       
       return products;
     } catch (e) {
@@ -75,15 +79,9 @@ class ProductDataManager {
   /// Fetch sản phẩm theo category với pagination
   Future<List<FoodModel>> _fetchCategoryProducts(String storeId, String categoryId, int page, int pageSize) async {
     try {
-      // Kiểm tra cache trước
-      final cacheKey = 'category_products_${storeId}_${categoryId}_page_$page';
-      final cachedData = _cacheManager.getCache<List<FoodModel>>(cacheKey);
+      print('🌐 Fetching category products for store $storeId, category $categoryId, page $page');
       
-      if (cachedData != null) {
-        return cachedData;
-      }
-
-      // Gọi API nếu không có cache
+      // Gọi API - cache sẽ được quản lý bởi dio_cache_interceptor
       final products = await _storeService.getStoreProducts(
         storeId,
         categoryId: categoryId,
@@ -91,8 +89,7 @@ class ProductDataManager {
         pageSize: pageSize,
       );
 
-      // Lưu vào cache
-      _cacheManager.setCache(cacheKey, products, ttl: const Duration(minutes: 30));
+      print('✅ Fetched ${products.length} category products for store $storeId, category $categoryId, page $page');
       
       return products;
     } catch (e) {
@@ -119,13 +116,15 @@ class ProductDataManager {
 
   /// Làm sạch cache hết hạn
   void cleanExpiredCache() {
-    _cacheManager.cleanExpiredCache();
+    // Cache được quản lý bởi dio_cache_interceptor
+    print('🗑️ Cache is managed by dio_cache_interceptor');
   }
 
   /// Xóa tất cả cache
   void clearAllCache() {
-    _cacheManager.clearCache();
+    // Cache được quản lý bởi dio_cache_interceptor
     _paginationServices.clear();
+    print('🗑️ Pagination services cleared, cache is managed by dio_cache_interceptor');
   }
 
   /// Dispose tất cả pagination services
@@ -138,6 +137,9 @@ class ProductDataManager {
 
   /// Lấy thông tin cache
   Map<String, dynamic> getCacheInfo() {
-    return _cacheManager.getCacheInfo();
+    return {
+      'cacheType': 'dio_cache_interceptor',
+      'paginationServices': _paginationServices.length,
+    };
   }
 }

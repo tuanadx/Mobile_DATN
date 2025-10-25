@@ -1,5 +1,5 @@
-name: feedia
-description: "nooooooooooooooo"
+name: savefood
+description: "SaveFood - Food Delivery App"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -39,6 +39,7 @@ dependencies:
   
   # HTTP & API
   dio: ^5.4.0
+  dio_cache_interceptor: ^3.4.0
   retrofit: ^4.0.3
   json_annotation: ^4.8.1
   google_sign_in: ^6.2.1
@@ -57,7 +58,7 @@ dependencies:
   logger: ^2.0.2+1
   dartz: ^0.10.1
   # Maps & Location
-  google_maps_flutter: ^2.5.3
+
   geolocator: ^14.0.2
   geocoding: ^4.0.0
   flutter_map: ^6.1.0
@@ -114,6 +115,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/icons/categories/
+    - assets/pin.png
 
   fonts:
     - family: Poppins

@@ -1,5 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:feedia/data/model/auth_response.dart';
+import 'package:savefood/data/model/auth_response.dart';
 
 class GoogleAuthService {
   static final GoogleSignIn _googleSignIn = GoogleSignIn(

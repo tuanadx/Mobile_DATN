@@ -26,7 +26,7 @@ class FeaturedSection extends StatelessWidget {
               const Text(
                 'Nổi bật',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -37,7 +37,7 @@ class FeaturedSection extends StatelessWidget {
                   child: const Text(
                     'Xem tất cả',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 9,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFFA4C3A2),
                     ),
@@ -68,7 +68,7 @@ class FeaturedSection extends StatelessWidget {
                     Text(
                       'Chưa có món nổi bật',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 12,
                         color: Colors.grey,
                       ),
                     ),
@@ -199,7 +199,7 @@ class FeaturedSection extends StatelessWidget {
                       child: Text(
                         item.name ?? 'Món nổi bật',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
@@ -222,7 +222,7 @@ class FeaturedSection extends StatelessWidget {
                           child: const Text(
                             'Nổi bật',
                             style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 8,
                               color: Color(0xFFA4C3A2),
                               fontWeight: FontWeight.w500,
                             ),
@@ -238,7 +238,7 @@ class FeaturedSection extends StatelessWidget {
                             child: Text(
                               item.category!,
                               style: const TextStyle(
-                                fontSize: 10,
+                                fontSize: 8,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w500,
                               ),

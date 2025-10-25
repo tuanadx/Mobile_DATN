@@ -7,6 +7,7 @@ class StoreEntity {
   final int reviewCount;
   final String deliveryTime;
   final String deliveryAddress;
+  final String distance;
   final List<String> tags;
   final bool isFavorite;
   final String phoneNumber;
@@ -24,6 +25,7 @@ class StoreEntity {
     required this.reviewCount,
     required this.deliveryTime,
     required this.deliveryAddress,
+    required this.distance,
     required this.tags,
     this.isFavorite = false,
     required this.phoneNumber,

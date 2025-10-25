@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
-import '../../core/configs/api_config.dart';
-import '../model/food_model.dart';
+import '../../../core/configs/api_config.dart';
+import '../../model/food_model.dart';
 
 class FeaturedService {
   final Dio _dio;

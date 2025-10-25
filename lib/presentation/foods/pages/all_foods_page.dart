@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/presentation/foods/pages/food_detail_page.dart';
-import 'package:feedia/presentation/home/widgets/food_item_card.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/core/services/product_data_manager.dart';
-import 'package:feedia/core/widgets/pagination_list_view.dart';
-import 'package:feedia/data/model/food_model.dart';
+import 'package:savefood/presentation/foods/pages/food_detail_page.dart';
+import 'package:savefood/presentation/home/widgets/food_item_card.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/core/services/product_data_manager.dart';
+import 'package:savefood/core/widgets/pagination_list_view.dart';
+import 'package:savefood/data/model/food_model.dart';
 
 class AllFoodsPage extends StatelessWidget {
   final String storeId;
@@ -17,6 +17,9 @@ class AllFoodsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dataManager = ProductDataManager();
+    
+    // Cache được quản lý tự động bởi dio_cache_interceptor
+    // Không cần clear cache thủ công nữa
     final paginationService = dataManager.getStoreProductsPagination(storeId);
 
     return Scaffold(
@@ -24,7 +27,7 @@ class AllFoodsPage extends StatelessWidget {
         title: const Text(
           'Tất cả món ăn',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -48,7 +51,7 @@ class AllFoodsPage extends StatelessWidget {
               'Lọc',
               style: TextStyle(
                 color: AppColor.primary,
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.w600,
               ),
             ),

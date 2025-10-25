@@ -1,7 +1,7 @@
-import 'package:feedia/domain/entities/food_entity.dart';
-import 'package:feedia/domain/repositories/food_repository_interface.dart';
-import 'package:feedia/data/services/api_service.dart';
-import 'package:feedia/data/model/food_model.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
+import 'package:savefood/domain/repositories/food_repository_interface.dart';
+import 'package:savefood/data/services/api_service.dart';
+import 'package:savefood/data/model/food_model.dart';
 
 class FoodRepositoryImpl implements FoodRepositoryInterface {
   final ApiService _apiService;

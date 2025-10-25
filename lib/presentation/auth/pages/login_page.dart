@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
-import 'package:feedia/data/services/Auth/otp_service.dart';
-import 'package:feedia/data/services/Auth/facebook_auth_service.dart';
-import 'package:feedia/data/services/Auth/google_auth_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
+import 'package:savefood/data/services/Auth/otp_service.dart';
+import 'package:savefood/data/services/Auth/facebook_auth_service.dart';
+import 'package:savefood/data/services/Auth/google_auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -71,8 +71,10 @@ class _LoginPageState extends State<LoginPage> {
       // Đóng loading dialog nếu còn mở
       if (mounted) Navigator.pop(context);
       
-      // Hiển thị lỗi
-      if (mounted) {
+      // Chỉ hiển thị lỗi nếu không phải do người dùng hủy
+      if (mounted && !error.toString().toLowerCase().contains('cancelled') && 
+          !error.toString().toLowerCase().contains('hủy') &&
+          !error.toString().toLowerCase().contains('cancel')) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Lỗi đăng nhập Google: ${error.toString()}'),
@@ -118,8 +120,10 @@ class _LoginPageState extends State<LoginPage> {
       // Đóng loading dialog nếu còn mở
       if (mounted) Navigator.pop(context);
       
-      // Hiển thị lỗi
-      if (mounted) {
+      // Chỉ hiển thị lỗi nếu không phải do người dùng hủy
+      if (mounted && !error.toString().toLowerCase().contains('cancelled') && 
+          !error.toString().toLowerCase().contains('hủy') &&
+          !error.toString().toLowerCase().contains('cancel')) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Lỗi đăng nhập Facebook: ${error.toString()}'),
@@ -201,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
           'Đăng nhập / Đăng ký',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18,
+            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -217,159 +221,176 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              
-              // Logo
-              SvgPicture.asset(
-                'assets/icons/logov2.svg',
-                width: 100,
-                height: 100,
-                fit: BoxFit.contain,
-              ),
-              
-              const SizedBox(height: 40),
-              
-              // Phone Input
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
-                  ],
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.phone,
-                      color: Colors.grey,
+        child: SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height - 
+                         MediaQuery.of(context).padding.top - 
+                         MediaQuery.of(context).padding.bottom -
+                         kToolbarHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 1),
+                    
+                    // Logo
+                    SvgPicture.asset(
+                      'assets/icons/logov2.svg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.contain,
                     ),
-                    hintText: 'Số điện thoại',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                  ),
-                ),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Continue Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _isPhoneValid ? _handlePhoneLogin : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _isPhoneValid 
-                        ? AppColor.primary 
-                        : Colors.grey[300],
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    'Tiếp tục',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              
-              const SizedBox(height: 16),
-              
-              // Password Login Link
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/password-login');
-                },
-                child: const Text(
-                  'Đăng nhập bằng Mật khẩu',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Divider with OR
-              Row(
-                children: [
-                  const Expanded(child: Divider()),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'HOẶC',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                    
+                    const SizedBox(height: 10),
+                    
+                    // Phone Input
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                  ),
-                  const Expanded(child: Divider()),
-                ],
-              ),
-              
-              const SizedBox(height: 32),
-              
-              // Social Login Buttons
-              _buildSocialButton(
-                iconPath: 'assets/icons/google-svgrepo-com.svg',
-                text: 'Tiếp tục với Google',
-                onTap: _signInWithGoogle,
-              ),
-              
-              const SizedBox(height: 12),
-              
-              _buildSocialButton(
-                iconPath: 'assets/icons/facebook-svgrepo-com.svg',
-                text: 'Tiếp tục với Facebook',
-                onTap: _signInWithFacebook,
-              ),
-              
-              const Spacer(),
-              
-              // Terms and Conditions
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: const TextSpan(
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 12,
-                    ),
-                    children: [
-                      TextSpan(text: 'Bằng cách đăng nhập hoặc đăng ký, bạn đồng ý với '),
-                      TextSpan(
-                        text: 'Chính sách quy định của Foody.',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
+                      child: TextField(
+                        controller: _phoneController,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(11),
+                        ],
+                        style: const TextStyle(fontSize: 12),
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          hintText: 'Số điện thoại',
+                          hintStyle: TextStyle(color: Colors.grey, fontSize: 12),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 12,
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    
+                    const SizedBox(height: 24),
+                    
+                    // Continue Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _isPhoneValid ? _handlePhoneLogin : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _isPhoneValid 
+                              ? AppColor.primary 
+                              : Colors.grey[300],
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: const Text(
+                          'Tiếp tục',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 5),
+                    
+                    // Password Login Link
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/password-login');
+                      },
+                      child: const Text(
+                        'Đăng nhập bằng Mật khẩu',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 8,
+                        ),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 20),
+                    
+                    // Divider with OR
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'HOẶC',
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 10,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
+                    
+                    const SizedBox(height: 32),
+                    
+                    // Social Login Buttons
+                    _buildSocialButton(
+                      iconPath: 'assets/icons/google-svgrepo-com.svg',
+                      text: 'Tiếp tục với Google',
+                      onTap: _signInWithGoogle,
+                    ),
+                    
+                    const SizedBox(height: 12),
+                    
+                    _buildSocialButton(
+                      iconPath: 'assets/icons/facebook-svgrepo-com.svg',
+                      text: 'Tiếp tục với Facebook',
+                      onTap: _signInWithFacebook,
+                    ),
+                    
+                    // Thay Spacer() bằng Expanded
+                    Expanded(
+                      child: Container(),
+                    ),
+                    
+                    // Terms and Conditions
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 10,
+                          ),
+                          children: [
+                            TextSpan(text: 'Bằng cách đăng nhập hoặc đăng ký, bạn đồng ý với '),
+                            TextSpan(
+                              text: 'Chính sách quy định của SaveFood.',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -389,7 +410,7 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           side: BorderSide(color: Colors.grey[300]!),
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -399,15 +420,15 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             SvgPicture.asset(
               iconPath,
-              width: 24,
-              height: 24,
+              width: 20,
+              height: 20,
               fit: BoxFit.contain,
             ),
             const SizedBox(width: 12),
             Text(
               text,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
               ),
             ),

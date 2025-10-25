@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
         ),
         title: const Text(
           'Cài đặt',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12),
         ),
         centerTitle: true,
       ),
@@ -73,7 +73,7 @@ class SettingsPage extends StatelessWidget {
                       onTap: () {},
                     ),
                     _buildMenuItem(
-                      title: 'Về Feedia',
+                      title: 'Về SaveFood',
                       onTap: () {},
                     ),
                   ],
@@ -101,7 +101,7 @@ class SettingsPage extends StatelessWidget {
                 child: const Text(
                   'Đăng xuất',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -122,7 +122,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Feedia Corporation',
+                  'SaveFood Corporation',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -148,7 +148,7 @@ class SettingsPage extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.w600,
               color: Colors.grey[600],
             ),
@@ -173,7 +173,7 @@ class SettingsPage extends StatelessWidget {
               child: Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 12,
                   color: Colors.black87,
                 ),
               ),
@@ -193,12 +193,12 @@ class SettingsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Đăng xuất'),
-        content: const Text('Bạn có chắc chắn muốn đăng xuất?'),
+        title: const Text('Đăng xuất', style: TextStyle(fontSize: 12)),
+        content: const Text('Bạn có chắc chắn muốn đăng xuất?', style: TextStyle(fontSize: 12)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Hủy'),
+            child: const Text('Hủy', style: TextStyle(fontSize: 12)),
           ),
           TextButton(
             onPressed: () async {
@@ -214,7 +214,7 @@ class SettingsPage extends StatelessWidget {
             },
             child: const Text(
               'Đăng xuất',
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.red, fontSize: 12),
             ),
           ),
         ],

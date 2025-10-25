@@ -1,5 +1,5 @@
-import 'package:feedia/domain/entities/promotion_entity.dart';
-import 'package:feedia/domain/repositories/promotion_repository_interface.dart';
+import 'package:savefood/domain/entities/promotion_entity.dart';
+import 'package:savefood/domain/repositories/promotion_repository_interface.dart';
 
 class GetPromotionsByCategory {
   final PromotionRepositoryInterface repository;

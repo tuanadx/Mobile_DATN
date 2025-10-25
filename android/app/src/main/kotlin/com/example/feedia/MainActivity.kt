@@ -1,4 +1,4 @@
-package com.example.feedia
+package com.example.SaveFood
 
 import io.flutter.embedding.android.FlutterActivity
 

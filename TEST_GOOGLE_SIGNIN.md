@@ -17,7 +17,7 @@
    - Vào "APIs & Services" > "Credentials"
    - Click "Create Credentials" > "OAuth 2.0 Client IDs"
    - Chọn "Android"
-   - Package name: `com.example.feedia`
+   - Package name: `com.example.SaveFood`
    - SHA-1: Copy từ kết quả gradlew signingReport
 
 3. **Cập nhật Google Auth Service:**

@@ -13,6 +13,7 @@ import 'presentation/profile/pages/addresses_page.dart';
 import 'presentation/profile/pages/add_address_page.dart';
 import 'presentation/profile/pages/settings_page.dart';
 import 'data/services/Auth/auth_service.dart';
+import 'data/services/cart_service.dart';
 import 'core/services/product_data_manager.dart';
 
 void main() async {
@@ -31,6 +32,9 @@ if (kIsWeb) {
   
   // Load thông tin đăng nhập từ local storage
   await AuthService.loadAuthData();
+  
+  // Load giỏ hàng từ local storage
+  await CartService().loadCart();
   
   // Preload dữ liệu quan trọng
   try {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/model/address.dart';
-import 'package:feedia/data/services/address_api.dart';
-import 'package:feedia/data/services/profile_service.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
-import 'package:feedia/presentation/profile/widgets/location_picker_widget.dart';
-import 'package:feedia/common/widgets/auth_guard.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/model/address.dart';
+import 'package:savefood/data/services/Map/address_api.dart';
+import 'package:savefood/data/services/profile_service.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
+import 'package:savefood/presentation/profile/widgets/location_picker_widget.dart';
+import 'package:savefood/common/widgets/auth_guard.dart';
 
 class AddAddressPage extends StatefulWidget {
   const AddAddressPage({super.key});
@@ -50,7 +50,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text('Thêm địa chỉ',
-            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600)),
+            style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12)),
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
@@ -114,7 +114,7 @@ class _AddAddressPageState extends State<AddAddressPage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
                   child: const Text('Lưu địa chỉ',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                 ),
               ),
             ),
@@ -143,8 +143,10 @@ class _AddAddressPageState extends State<AddAddressPage> {
               controller: controller,
               onChanged: (_) => setState(() {}),
               keyboardType: keyboardType,
+              style: const TextStyle(fontSize: 12),
               decoration: InputDecoration(
                 hintText: hint,
+                hintStyle: const TextStyle(fontSize: 12),
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
               ),
@@ -203,8 +205,10 @@ class _AddAddressPageState extends State<AddAddressPage> {
         controller: controller,
         onChanged: (_) => setState(() {}),
         maxLines: 6,
+        style: const TextStyle(fontSize: 12),
         decoration: InputDecoration(
           hintText: hint,
+          hintStyle: const TextStyle(fontSize: 12),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         ),

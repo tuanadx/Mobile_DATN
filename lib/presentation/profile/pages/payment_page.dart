@@ -15,7 +15,7 @@ class PaymentPage extends StatelessWidget {
         ),
         title: const Text(
           'Thanh toán',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12),
         ),
         centerTitle: true,
       ),
@@ -60,7 +60,7 @@ class PaymentPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    style: const TextStyle(fontSize: 12, color: Colors.black87),
                   ),
                 ),
                 Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey[400]),

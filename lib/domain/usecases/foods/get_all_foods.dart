@@ -1,5 +1,5 @@
-import 'package:feedia/domain/entities/food_entity.dart';
-import 'package:feedia/domain/repositories/food_repository_interface.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
+import 'package:savefood/domain/repositories/food_repository_interface.dart';
 
 class GetAllFoods {
   final FoodRepositoryInterface repository;

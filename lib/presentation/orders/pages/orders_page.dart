@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/common/widgets/auth_guard.dart';
+import 'package:savefood/common/widgets/auth_guard.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -22,23 +22,23 @@ class OrdersPage extends StatelessWidget {
           children: [
             Icon(
               Icons.shopping_bag_outlined,
-              size: 80,
+              size: 60,
               color: Colors.grey,
             ),
             SizedBox(height: 16),
             Text(
               'Chưa có đơn hàng nào',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey,
               ),
             ),
             SizedBox(height: 8),
             Text(
-              'Hãy đặt món để xem đơn hàng của bạn',
+              'Hãy đặt món nào',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey,
               ),
             ),

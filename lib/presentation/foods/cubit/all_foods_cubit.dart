@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:feedia/data/model/food_model.dart';
-import 'package:feedia/data/repositories/food_repository_impl.dart';
-import 'package:feedia/domain/entities/food_entity.dart';
+import 'package:savefood/data/model/food_model.dart';
+import 'package:savefood/data/repositories/food_repository_impl.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
 
 class AllFoodsCubit extends Cubit<AllFoodsState> {
   final FoodRepositoryImpl _foodRepository;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
-import 'package:feedia/presentation/auth/pages/login_page.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
+import 'package:savefood/presentation/auth/pages/login_page.dart';
 
 class AuthGuard extends StatelessWidget {
   final Widget child;

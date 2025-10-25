@@ -4,9 +4,9 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'package:maplibre_gl/maplibre_gl.dart';
 import 'package:http/http.dart' as http;
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/core/configs/goong_config.dart';
-import 'package:feedia/data/services/Map/location_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/goong_config.dart';
+import 'package:savefood/data/services/Map/location_service.dart';
 
 class MapPage extends StatefulWidget {
   final String currentLocation;

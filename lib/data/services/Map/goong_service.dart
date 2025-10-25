@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:feedia/core/configs/goong_config.dart';
+import 'package:savefood/core/configs/goong_config.dart';
 
 class GoongService {
   static final GoongService _instance = GoongService._internal();

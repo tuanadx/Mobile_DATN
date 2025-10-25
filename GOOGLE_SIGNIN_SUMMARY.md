@@ -78,7 +78,7 @@
 
 ## ⚠️ Lưu ý quan trọng
 
-- **Package name:** `com.example.feedia` (có thể cần thay đổi)
+- **Package name:** `com.example.SaveFood` (có thể cần thay đổi)
 - **SHA-1 fingerprint:** Phải lấy chính xác từ debug keystore
 - **Google Play Services:** Cần có trên thiết bị test
 - **Internet:** Cần kết nối internet để đăng nhập Google

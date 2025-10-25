@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/common/widgets/auth_guard.dart';
+import 'package:savefood/common/widgets/auth_guard.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
@@ -22,23 +22,23 @@ class NotificationsPage extends StatelessWidget {
           children: [
             Icon(
               Icons.notifications_none,
-              size: 80,
+              size: 66,
               color: Colors.grey,
             ),
             SizedBox(height: 16),
             Text(
               'Chưa có thông báo nào',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey,
               ),
             ),
             SizedBox(height: 8),
             Text(
-              'Chúng tôi sẽ thông báo khi có cập nhật mới',
+              'Bạn hãy quay lại sau nhé',
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey,
               ),
             ),

@@ -1,5 +1,5 @@
-import 'package:feedia/domain/entities/store_entity.dart';
-import 'package:feedia/domain/entities/food_entity.dart';
+import 'package:savefood/domain/entities/store_entity.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
 
 abstract class StoreRepositoryInterface {
   Future<StoreEntity> getStoreById(String storeId);

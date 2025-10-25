@@ -1,8 +1,8 @@
-import 'package:feedia/domain/entities/store_entity.dart';
-import 'package:feedia/domain/entities/food_entity.dart';
-import 'package:feedia/domain/repositories/store_repository_interface.dart';
-import 'package:feedia/data/services/Store/Store_service.dart';
-import 'package:feedia/data/model/food_model.dart';
+import 'package:savefood/domain/entities/store_entity.dart';
+import 'package:savefood/domain/entities/food_entity.dart';
+import 'package:savefood/domain/repositories/store_repository_interface.dart';
+import 'package:savefood/data/services/Store/Store_service.dart';
+import 'package:savefood/data/model/food_model.dart';
 
 class StoreRepositoryImpl implements StoreRepositoryInterface {
   final StoreService _storeService;

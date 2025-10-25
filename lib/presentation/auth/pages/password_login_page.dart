@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
 
 class PasswordLoginPage extends StatefulWidget {
   const PasswordLoginPage({super.key});

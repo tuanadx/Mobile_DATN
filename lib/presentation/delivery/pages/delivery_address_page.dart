@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/presentation/profile/pages/add_address_page.dart';
-import 'package:feedia/presentation/delivery/pages/location_search_page.dart';
-import 'package:feedia/presentation/delivery/pages/map_page.dart';
-import 'package:feedia/data/services/Map/location_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/presentation/profile/pages/add_address_page.dart';
+import 'package:savefood/presentation/delivery/pages/location_search_page.dart';
+import 'package:savefood/presentation/delivery/pages/map_page.dart';
+import 'package:savefood/data/services/Map/location_service.dart';
 
 class DeliveryAddressPage extends StatefulWidget {
   final String currentLocation;
@@ -57,7 +57,7 @@ class _DeliveryAddressPageState extends State<DeliveryAddressPage> {
           'Địa chỉ giao hàng',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 18,
+            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/services/Map/goong_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/services/Map/goong_service.dart';
 
 class LocationSearchPage extends StatefulWidget {
   const LocationSearchPage({super.key});

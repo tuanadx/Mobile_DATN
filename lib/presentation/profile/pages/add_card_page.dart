@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
 
 class AddCardPage extends StatefulWidget {
   const AddCardPage({super.key});
@@ -48,7 +48,7 @@ class _AddCardPageState extends State<AddCardPage> {
         ),
         title: const Text(
           'Add Card',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600, fontSize: 12),
         ),
         centerTitle: true,
       ),
@@ -62,7 +62,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 const Text(
                   'Thông tin thẻ',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -104,7 +104,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 const Text(
                   'Địa chỉ nhận thư',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -123,7 +123,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 const SizedBox(height: 16),
                 const Text(
                   'Giao dịch xác thực: 1.000đ (Số tiền sẽ được hoàn lại khi quá trình xác thực hoàn tất)',
-                  style: TextStyle(fontSize: 13, color: Colors.black54),
+                  style: TextStyle(fontSize: 12, color: Colors.black54),
                 ),
               ],
             ),
@@ -140,12 +140,12 @@ class _AddCardPageState extends State<AddCardPage> {
                     backgroundColor: AppColor.primary,
                     disabledBackgroundColor: Colors.grey[300],
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
                   child: const Text(
                     'Hoàn thành',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
@@ -174,10 +174,12 @@ class _AddCardPageState extends State<AddCardPage> {
               controller: controller,
               onChanged: (_) => setState(() {}),
               keyboardType: keyboardType,
+              style: const TextStyle(fontSize: 12),
               decoration: InputDecoration(
                 hintText: hint,
+                hintStyle: const TextStyle(fontSize: 12),
                 border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
             ),
           ),

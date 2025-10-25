@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:feedia/data/model/promo_model.dart';
-import 'package:feedia/data/repositories/promotion_repository_impl.dart';
-import 'package:feedia/domain/entities/promotion_entity.dart';
+import 'package:savefood/data/model/promo_model.dart';
+import 'package:savefood/data/repositories/promotion_repository_impl.dart';
+import 'package:savefood/domain/entities/promotion_entity.dart';
 
 class PromotionCubit extends Cubit<PromotionState> {
   final PromotionRepositoryImpl _promotionRepository;

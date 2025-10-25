@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/model/category_model_fix.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/model/category_model_fix.dart';
 
 class CategorySection extends StatefulWidget {
   final List<CategoryModel> categories;
@@ -32,7 +32,7 @@ class _CategorySectionState extends State<CategorySection> {
           
           // Category Grid with horizontal scroll
           Container(
-            height: 188, // Fixed height for 2 rows
+            height: 210, // Increased to prevent overflow with 2 rows
             child: PageView.builder(
               itemCount: (widget.categories.length / 8).ceil(), // 8 items per page (2 rows x 4 columns)
               onPageChanged: (index) {
@@ -79,7 +79,7 @@ class _CategorySectionState extends State<CategorySection> {
           
           // Page indicator
           if ((widget.categories.length / 8).ceil() > 1) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 1),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -121,7 +121,7 @@ class _CategorySectionState extends State<CategorySection> {
           Text(
             category.name,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 8,
               fontWeight: FontWeight.w500,
               color: Colors.black,
               fontFamily: 'Poppins',

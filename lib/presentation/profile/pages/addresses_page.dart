@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:feedia/core/configs/theme/app_color.dart';
-import 'package:feedia/data/local/address_local.dart';
-import 'package:feedia/data/model/address.dart';
-import 'package:feedia/data/services/Auth/auth_service.dart';
+import 'package:savefood/core/configs/theme/app_color.dart';
+import 'package:savefood/data/local/address_local.dart';
+import 'package:savefood/data/model/address.dart';
+import 'package:savefood/data/services/Auth/auth_service.dart';
 
 class AddressesPage extends StatefulWidget {
   const AddressesPage({super.key});
@@ -56,7 +56,7 @@ class _AddressesPageState extends State<AddressesPage> {
         ),
         title: const Text(
           'Địa chỉ giao hàng',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600,fontSize:12),
         ),
         centerTitle: true,
       ),
@@ -84,7 +84,7 @@ class _AddressesPageState extends State<AddressesPage> {
               ),
               child: const Text(
                 'Thêm địa chỉ mới',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
               ),
             ),
           ),
@@ -160,7 +160,7 @@ class _AddressCard extends StatelessWidget {
                     child: Text(
                       item.title,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: Colors.black87,
                       ),
@@ -171,6 +171,7 @@ class _AddressCard extends StatelessWidget {
                     child: Text(
                       'Sửa',
                       style: TextStyle(
+                        fontSize:12,
                         color: AppColor.primary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -188,7 +189,7 @@ class _AddressCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Tòa nhà: ${item.building}',
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
+                    style: const TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                 ),
               if (item.gate != null && item.gate!.isNotEmpty)
@@ -196,7 +197,7 @@ class _AddressCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Cổng: ${item.gate}',
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
+                    style: const TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                 ),
               if (item.noteForDriver != null && item.noteForDriver!.isNotEmpty)
@@ -204,7 +205,7 @@ class _AddressCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Ghi chú: ${item.noteForDriver}',
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
+                    style: const TextStyle(fontSize: 12, color: Colors.black54),
                   ),
                 ),
               const SizedBox(height: 12),
@@ -254,7 +255,7 @@ class _QuickAddRow extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    style: const TextStyle(fontSize: 12, color: Colors.black87),
                   ),
                 ),
                 Icon(Icons.chevron_right, color: Colors.black38),
